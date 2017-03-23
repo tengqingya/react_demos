@@ -1,4 +1,6 @@
+//用来测试打包，内容比较难请看，请从demo02开始学习
 //使用状态提升制作温度转换器
+
 //两个input将摄氏度转换为华氏度
 import React from 'react';
 import ReactDOM from 'react-dom';
