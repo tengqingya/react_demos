@@ -44,8 +44,7 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(1);
-	module.exports = __webpack_require__(179);
+	module.exports = __webpack_require__(1);
 
 
 /***/ },
@@ -64,152 +63,113 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
+	var _fetchJsonp = __webpack_require__(179);
+
+	var _fetchJsonp2 = _interopRequireDefault(_fetchJsonp);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } //用来测试打包，内容比较难请看，请从demo02开始学习
-	//使用状态提升制作温度转换器
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } //function tick() {
+	//    //div等模块变量需要使用const React elements are immutable.
+	//    const element = (
+	//        <div>
+	//            <h1>Hello, world!</h1>
+	//            <h2>It is {new Date().toLocaleTimeString()}.</h2>
+	//        </div>
+	//    );
+	//    ReactDOM.render(
+	//        element,
+	//        document.getElementById('example')
+	//    );
+	//}
+	//setInterval(tick, 1000);
 
-	//两个input将摄氏度转换为华氏度
 
+	//var fetchUrl = require("fetch").fetchUrl;
 
-	function BoilingVerdict(props) {
-	    if (props.celsius >= 100) {
-	        return _react2.default.createElement(
-	            'p',
-	            null,
-	            'The water would boil.'
-	        );
-	    }
+	//函数即组件
+	//组件名字必须大写
+	function Welcome(props) {
 	    return _react2.default.createElement(
-	        'p',
+	        'h1',
 	        null,
-	        'The water would not boil.'
+	        'Hello, ',
+	        props.name
 	    );
 	}
 
-	var scaleNames = {
-	    c: 'Celsius',
-	    f: 'Fahrenheit'
-	};
+	function App() {
+	    return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(Welcome, { name: 'Sara' }),
+	        _react2.default.createElement(Welcome, { name: 'Cahal' }),
+	        _react2.default.createElement(Welcome, { name: 'Edite' })
+	    );
+	}
 
-	var TemperatureInput = function (_React$Component) {
-	    _inherits(TemperatureInput, _React$Component);
+	var Search = function (_React$Component) {
+	    _inherits(Search, _React$Component);
 
-	    function TemperatureInput(props) {
-	        _classCallCheck(this, TemperatureInput);
+	    function Search(props) {
+	        _classCallCheck(this, Search);
 
-	        var _this = _possibleConstructorReturn(this, (TemperatureInput.__proto__ || Object.getPrototypeOf(TemperatureInput)).call(this, props));
+	        var _this = _possibleConstructorReturn(this, (Search.__proto__ || Object.getPrototypeOf(Search)).call(this, props));
 
-	        _this.handleChange = _this.handleChange.bind(_this);
-	        _this.state = { temperature: '' };
+	        _this.state = { mystate: "init state" };
 	        return _this;
 	    }
 
-	    _createClass(TemperatureInput, [{
-	        key: 'handleChange',
-	        value: function handleChange(e) {
-	            //this.setState({temperature: e.target.value});
-	            console.log(e.target);
-	            this.props.onTemprature({ scale: this.props.name, temperature: e.target.value });
+	    _createClass(Search, [{
+	        key: 'changeHandler',
+	        value: function changeHandler() {
+	            console.log("change");
+	        }
+	    }, {
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            var _this2 = this;
+
+	            console.log("componentDidMount");
+	            (0, _fetchJsonp2.default)('http://api.asilu.com/weather/?callback=jQuery19109754821238423277_1490675505133&city=%E6%B5%8E%E5%AE%81&_=1490675505135', { credentials: 'include' }).then(function (response) {
+	                console.log(response);
+	                return response.json();
+	            }).then(function (data) {
+	                console.log(data);
+	                if (data) {
+	                    _this2.setState({
+	                        mystate: JSON.stringify(data)
+	                    });
+	                } else {
+	                    alert("no data");
+	                }
+	            });
 	        }
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            var temperature = this.props.temperature;
-	            var scale = this.props.name;
-	            return _react2.default.createElement(
-	                'fieldset',
-	                null,
-	                _react2.default.createElement(
-	                    'legend',
-	                    null,
-	                    'Enter temperature in ',
-	                    scaleNames[scale],
-	                    ':'
-	                ),
-	                _react2.default.createElement('input', { value: temperature,
-	                    onChange: this.handleChange })
-	            );
-	        }
-	    }]);
-
-	    return TemperatureInput;
-	}(_react2.default.Component);
-
-	var Calculator = function (_React$Component2) {
-	    _inherits(Calculator, _React$Component2);
-
-	    function Calculator(props) {
-	        _classCallCheck(this, Calculator);
-
-	        var _this2 = _possibleConstructorReturn(this, (Calculator.__proto__ || Object.getPrototypeOf(Calculator)).call(this, props));
-
-	        _this2.onTemprature = _this2.onTemprature.bind(_this2);
-	        _this2.state = { temperature: '', scale: 'c' };
-	        return _this2;
-	    }
-
-	    _createClass(Calculator, [{
-	        key: 'onTemprature',
-	        value: function onTemprature(childValue) {
-
-	            this.setState({ scale: childValue.scale, temperature: childValue.temperature });
-	            //if(childValue.scale === 'c'){
-	            //    fahrenheit=tryConvert(childValue.temperature, toFahrenheit);
-	            //}else {
-	            //    celsius=tryConvert(childValue.temperature, toCelsius);
-	            //}
-	            //如果想在下面的render函数中使用本函数的变量则可以将此变量放到state中
-	            //状态改变了才可以触发render
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-
-	            var scale = this.state.scale;
-	            var temperature = this.state.temperature;
-	            var celsius = scale === 'f' ? tryConvert(temperature, toCelsius) : temperature;
-	            var fahrenheit = scale === 'c' ? tryConvert(temperature, toFahrenheit) : temperature;
-
 	            return _react2.default.createElement(
 	                'div',
-	                null,
-	                _react2.default.createElement(TemperatureInput, { name: 'c', onTemprature: this.onTemprature, temperature: celsius }),
-	                _react2.default.createElement(TemperatureInput, { name: 'f', onTemprature: this.onTemprature, temperature: fahrenheit }),
-	                _react2.default.createElement(BoilingVerdict, {
-	                    celsius: parseFloat(celsius) })
+	                { className: 'col-width' },
+	                _react2.default.createElement(
+	                    'button',
+	                    { className: 'btn btn-primary applic_btn J_search' },
+	                    '\u67E5\u8BE2'
+	                ),
+	                _react2.default.createElement('input', { type: 'text', value: this.state.mystate, onChange: this.changeHandler }),
+	                _react2.default.createElement(App, null)
 	            );
 	        }
 	    }]);
 
-	    return Calculator;
+	    return Search;
 	}(_react2.default.Component);
 
-	function toCelsius(fahrenheit) {
-	    return (fahrenheit - 32) * 5 / 9;
-	}
-
-	function toFahrenheit(celsius) {
-	    return celsius * 9 / 5 + 32;
-	}
-
-	function tryConvert(temperature, convert) {
-	    var input = parseFloat(temperature);
-	    if (Number.isNaN(input)) {
-	        return '';
-	    }
-	    var output = convert(input);
-	    var rounded = Math.round(output * 1000) / 1000;
-	    return rounded.toString();
-	}
-
-	_reactDom2.default.render(_react2.default.createElement(Calculator, null), document.getElementById('example'));
-
-	//https://addons.mozilla.org/zh-CN/firefox/addon/react-devtools/
+	_reactDom2.default.render(_react2.default.createElement(Search, null), document.getElementById('example'));
 
 /***/ },
 /* 2 */
@@ -21653,11 +21613,116 @@
 
 /***/ },
 /* 179 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;(function (global, factory) {
+	  if (true) {
+	    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [exports, module], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	  } else if (typeof exports !== 'undefined' && typeof module !== 'undefined') {
+	    factory(exports, module);
+	  } else {
+	    var mod = {
+	      exports: {}
+	    };
+	    factory(mod.exports, mod);
+	    global.fetchJsonp = mod.exports;
+	  }
+	})(this, function (exports, module) {
+	  'use strict';
 
-	document.write('<h1>Hello World</h1>');
+	  var defaultOptions = {
+	    timeout: 5000,
+	    jsonpCallback: 'callback',
+	    jsonpCallbackFunction: null
+	  };
+
+	  function generateCallbackFunction() {
+	    return 'jsonp_' + Date.now() + '_' + Math.ceil(Math.random() * 100000);
+	  }
+
+	  // Known issue: Will throw 'Uncaught ReferenceError: callback_*** is not defined'
+	  // error if request timeout
+	  function clearFunction(functionName) {
+	    // IE8 throws an exception when you try to delete a property on window
+	    // http://stackoverflow.com/a/1824228/751089
+	    try {
+	      delete window[functionName];
+	    } catch (e) {
+	      window[functionName] = undefined;
+	    }
+	  }
+
+	  function removeScript(scriptId) {
+	    var script = document.getElementById(scriptId);
+	    document.getElementsByTagName('head')[0].removeChild(script);
+	  }
+
+	  function fetchJsonp(_url) {
+	    var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+
+	    // to avoid param reassign
+	    var url = _url;
+	    var timeout = options.timeout || defaultOptions.timeout;
+	    var jsonpCallback = options.jsonpCallback || defaultOptions.jsonpCallback;
+
+	    var timeoutId = undefined;
+
+	    return new Promise(function (resolve, reject) {
+	      var callbackFunction = options.jsonpCallbackFunction || generateCallbackFunction();
+	      var scriptId = jsonpCallback + '_' + callbackFunction;
+
+	      window[callbackFunction] = function (response) {
+	        resolve({
+	          ok: true,
+	          // keep consistent with fetch API
+	          json: function json() {
+	            return Promise.resolve(response);
+	          }
+	        });
+
+	        if (timeoutId) clearTimeout(timeoutId);
+
+	        removeScript(scriptId);
+
+	        clearFunction(callbackFunction);
+	      };
+
+	      // Check if the user set their own params, and if not add a ? to start a list of params
+	      url += url.indexOf('?') === -1 ? '?' : '&';
+
+	      var jsonpScript = document.createElement('script');
+	      jsonpScript.setAttribute('src', '' + url + jsonpCallback + '=' + callbackFunction);
+	      jsonpScript.id = scriptId;
+	      document.getElementsByTagName('head')[0].appendChild(jsonpScript);
+
+	      timeoutId = setTimeout(function () {
+	        reject(new Error('JSONP request to ' + _url + ' timed out'));
+
+	        clearFunction(callbackFunction);
+	        removeScript(scriptId);
+	      }, timeout);
+	    });
+	  }
+
+	  // export as global function
+	  /*
+	  let local;
+	  if (typeof global !== 'undefined') {
+	    local = global;
+	  } else if (typeof self !== 'undefined') {
+	    local = self;
+	  } else {
+	    try {
+	      local = Function('return this')();
+	    } catch (e) {
+	      throw new Error('polyfill failed because global object is unavailable in this environment');
+	    }
+	  }
+	  local.fetchJsonp = fetchJsonp;
+	  */
+
+	  module.exports = fetchJsonp;
+	});
 
 /***/ }
 /******/ ]);
