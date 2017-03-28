@@ -12,10 +12,13 @@
     "babel-preset-react": "6.x",
     "bundle-loader": "^0.5.4",
     "css-loader": "0.x",
+    "fetch": "^1.1.0",
+    "fetch-jsonp": "^1.0.6",
     "file-loader": "0.x",
     "history": "^1.17.0",
     "html-webpack-plugin": "2.x",
     "jquery": "3.x",
+    "json-loader": "^0.5.4",
     "jsx-loader": "~0.13.2",
     "open-browser-webpack-plugin": "0.x",
     "react": "15.x",
@@ -25,8 +28,6 @@
     "url-loader": "~0.5.6",
     "webpack": "1.x",
     "webpack-dev-server": "1.x",
-    "fetch": "^1.1.0",
-    "fetch-jsonp": "^1.0.6",
-    "json-loader": "^0.5.4"
+    "whatwg-fetch": "^2.0.3"
   }
 }
